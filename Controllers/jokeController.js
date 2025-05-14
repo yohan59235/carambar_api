@@ -30,3 +30,16 @@ exports.getJokeById = async (req, res) => {
       .json({ error: "Erreur lors de la récupération de la blague" });
   }
 };
+
+exports.getRandomJoke = async (req, res) => {
+  try {
+    count = await Joke.count();
+    const randomIndex = Math.floor(Math.random() * count);
+    const joke = await Joke.findOne({ offset: randomIndex });
+    res.json(joke);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération de la blague aléatoire" });
+  }
+};
