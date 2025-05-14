@@ -43,3 +43,19 @@ exports.getRandomJoke = async (req, res) => {
       .json({ error: "Erreur lors de la récupération de la blague aléatoire" });
   }
 };
+
+exports.getJokesByCategorie = async (req, res) => {
+  try {
+    const { nom } = req.params;
+    const jokes = await Joke.findAll({ where: { categorie: nom } });
+
+    if (jokes.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Aucune blague trouvée dans cette catégorie" });
+    }
+    res.json(jokes);
+  } catch (err) {
+    res.status(500).json({ error: "Erreur du filtrage par catégorie" });
+  }
+};
