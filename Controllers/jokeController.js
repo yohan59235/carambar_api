@@ -18,3 +18,15 @@ exports.getAllJokes = async (req, res) => {
     res.status(500).json({ error: "Erreur de la récupération des blagues" });
   }
 };
+
+exports.getJokeById = async (req, res) => {
+  try {
+    const joke = await Joke.findByPk(req.params.id);
+    if (!joke) return res.status(404).json({ error: "Blague non trouvée" });
+    res.json(joke);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération de la blague" });
+  }
+};
