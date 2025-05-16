@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Carambar API
+  version: 1.0.0
+paths:
+  /blague:
+    get:
+      summary: Liste toutes les blagues
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Ajoute une nouvelle blague
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categorie:
+                  type: string
+                  example: Dev
+                question:
+                  type: string
+                  example: Pourquoi le développeur aime le café ?
+                reponse:
+                  type: string
+                  example: Parce que c’est du Java.
+      responses:
+        "201":
+          description: Créée
+  /blague/random:
+    get:
+      summary: Récupère une blague aléatoire
+      responses:
+        "200":
+          description: OK
+  /blague/{id}:
+    get:
+      summary: Récupère une blague par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Non trouvée
+  /categorie/{nom}:
+  get:
+    summary: Récupère toutes les blagues d'une catégorie donnée
+    parameters:
+      - in: path
+        name: nom
+        required: true
+        schema:
+          type: string
+        description: Le nom de la catégorie (Animaux, Dev, École)
+    responses:
+      '200':
+        description: Blagues de la catégorie retournées avec succès
+      '404':
+        description: Aucune blague trouvée pour cette catégorie
