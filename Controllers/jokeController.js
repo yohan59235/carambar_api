@@ -1,4 +1,5 @@
 const { Joke } = require("../models");
+const { Op } = require("sequelize");
 
 exports.addJoke = async (req, res) => {
   try {
@@ -33,11 +34,24 @@ exports.getJokeById = async (req, res) => {
 
 exports.getRandomJoke = async (req, res) => {
   try {
-    count = await Joke.count();
+    const count = await Joke.count();
+    if (count === 0) {
+      return res
+        .status(404)
+        .json({ error: "Aucune blague trouvée dans la base de données" });
+    }
     const randomIndex = Math.floor(Math.random() * count);
-    const joke = await Joke.findOne({ offset: randomIndex });
+    const randomId = parseInt(randomIndex, 10) + 1;
+    const joke = await Joke.findOne({
+      where: { id: randomId },
+    });
+    if (!joke) {
+      return res
+        .status(500)
+        .json({ error: "Erreur interne : Blague aléatoire non trouvée" });
+    }
     res.json(joke);
-  } catch (err) {
+  } catch (error) {
     res
       .status(500)
       .json({ error: "Erreur lors de la récupération de la blague aléatoire" });

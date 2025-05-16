@@ -61,7 +61,7 @@ paths:
           type: string
         description: Le nom de la catégorie (Animaux, Dev, École)
     responses:
-      '200':
+      "200":
         description: Blagues de la catégorie retournées avec succès
-      '404':
+      "404":
         description: Aucune blague trouvée pour cette catégorie
