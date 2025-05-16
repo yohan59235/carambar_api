@@ -1,6 +1,9 @@
-import { Sequelize } from "sequelize";
+const { Sequelize } = require("sequelize");
+const path = require("path");
 
-export const sequelize = new Sequelize({
+const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "/db.sqlite",
+  storage: path.join(__dirname, "../database.sqlite"),
 });
+
+module.exports = sequelize;
