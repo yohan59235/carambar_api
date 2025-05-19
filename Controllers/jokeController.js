@@ -58,6 +58,21 @@ exports.getRandomJoke = async (req, res) => {
   }
 };
 
+exports.getAllCategories = async (req, res) => {
+  try {
+    const categories = await Joke.findAll({
+      attributes: ["categorie"],
+      group: ["categorie"],
+      raw: true,
+    });
+    const categoryNames = categories.map((c) => c.categorie);
+    res.status(200).json(categoryNames);
+  } catch (err) {
+    console.error("Erreur sequelize", err)
+    res.status(500).json({ error: "Il n'y a pas de catégories de blagues" });
+  }
+};
+
 exports.getJokesByCategorie = async (req, res) => {
   try {
     const { nom } = req.params;

@@ -5,7 +5,8 @@ const controller = require("../Controllers/jokeController");
 router.get("/random", controller.getRandomJoke);
 router.post("/", controller.addJoke);
 router.get("/", controller.getAllJokes);
-router.get("/:id", controller.getJokeById);
+router.get("/categorie", controller.getAllCategories);
 router.get("/categorie/:nom", controller.getJokesByCategorie);
+router.get("/:id", controller.getJokeById);
 
 module.exports = router;
